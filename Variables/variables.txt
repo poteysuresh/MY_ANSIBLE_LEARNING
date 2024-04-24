@@ -1,0 +1,2 @@
+os: linux
+automation: ansible

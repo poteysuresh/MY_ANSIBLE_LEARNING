@@ -1,0 +1,14 @@
+---
+- name: basic variable playbook
+  hosts: all
+  become: yes
+  remote_user: suri
+  vars:
+   - a: suri
+   - b: raji
+  tasks:
+    - name: execution of variables using debug module
+      debug:
+        msg:
+         - "Hello {{ a }}"
+         - "Hello {{ b }}"

@@ -1,0 +1,17 @@
+---
+- name: using multiple variables as array
+  hosts: all
+  become: yes
+  remote_user: suri
+  vars:
+    students:
+     - suri
+     - raji
+     - udit
+  tasks:
+    - name: using variables in debug multiline module
+      debug:
+        msg:
+         - "hello {{ students }}"
+         - "Hi {{ students[0] }}"
+         - "Hi {{ students[1] }}"

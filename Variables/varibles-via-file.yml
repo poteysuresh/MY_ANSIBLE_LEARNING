@@ -1,0 +1,13 @@
+---
+- name: variables are used via txt file
+  hosts: all
+  become: yes
+  remote_user: suri
+  vars_files:
+   - variables.txt
+  tasks:
+    - name: taking variables from variables.txt file
+      debug:
+        msg:
+         - "My core skills is {{ os }}"
+         - "I am Learning {{ automation }} automation tool."

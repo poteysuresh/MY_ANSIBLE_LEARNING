@@ -1,0 +1,14 @@
+---
+- name: taking variable from the user using prompt method
+  hosts: all
+  become: true
+  remote_user: suri
+  vars_prompt:
+    name: pkgs
+    prompt: "please enter your package or Name : "
+    private: false
+  tasks:
+    - name: taking the input as variable
+      debug:
+        msg:
+         - "Hello {{ pkgs }} Nice to meet you."

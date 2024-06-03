@@ -1,0 +1,29 @@
+---
+- name: configuration of yum repository
+  hosts: all
+  become: yes
+  remote_user: devops
+  tasks:
+    - name: create a folder
+      file:
+        path: /dvd1
+        state: directory
+    - name: mount the dvd wit the folder
+      mount:
+        src: /dev/sr0
+        path: /dvd1
+        state: mounted
+        file: iso9660
+    - name: yum repo file configuration
+      yum_repository:
+        base_url: /dvd1/AppStream
+        name: APPSTREAM
+        description: this contaion appstream package
+        gpg_check: no
+    - name: yum repo file configuration
+      yum_repository:
+        base_url: /dvd1/BaseOS
+        name: BASEOS
+        description: this contaion baseos packages
+        gpg_check: no
+        

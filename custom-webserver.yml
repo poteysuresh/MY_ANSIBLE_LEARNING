@@ -1,0 +1,39 @@
+---
+- name: configuration of webserver with custom documentroot and customised port no 8088
+  hosts: all
+  remote_user: devops
+  become: yes
+  tasks:
+    - name: install httpd package
+      package: 
+        name: httpd
+        state: latest
+    - name: add httpd service to firewall
+      firewalld:
+        port: http
+        permanent: true
+        state: enabled
+        immediate: yes
+    - name: add custom webserver port to firewall
+      firewalld:
+        port: 8088/tcp
+        permanent: true
+        state: enabled
+        immediate: yes
+    - name: copy custom configuration file to /etc/httpd/conf.d/
+      copy:
+        src: lw.conf
+        dest: /etc/httpd/conf.d/lw.conf
+    - name: creation of DocumentRoot 
+      file:
+        path: /var/www/lw
+        state: directory
+    - name: create index.html file in DocumentRoot with content
+      copy:
+        dest: /var/www/lw/index.html
+        content: "Har Har Mahadev"
+    - name: start the httpd service
+      service:
+        name: httpd
+        state: start
+        enabled: yes

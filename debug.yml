@@ -1,0 +1,13 @@
+---
+- name: debug module works like echo command and print in python
+  hosts: all
+  vars:
+  - myvar: "Hello world"
+  tasks:
+    - name: debug is module name and msg works like argument
+      debug:
+        msg: "Hello World"
+
+    - name: calling variable value using debug module
+      debug:
+        msg: "{{ myvar }}"

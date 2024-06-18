@@ -1,0 +1,12 @@
+---
+- hosts: all
+  remote_user: devops
+  become: yes
+  tasks:
+    - name: printing messeges on the screen
+      debug:
+        msg: 'Har Har Mahadev'
+
+    - name: printing predefined ansible variables
+      debug:
+        msg: "{{ ansible_facts['os_family'] }}"

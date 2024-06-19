@@ -1,0 +1,34 @@
+---
+- hosts: all
+  remote_user: devops
+  become: yes
+  tasks:
+    - name: install httpd
+      package:
+        name: httpd
+        state: latest
+    - name: edit httpd_conf file
+      replace:
+        dest: /etc/httpd/conf/httpd.conf
+        regexp: "AllowOverride None"
+        replace: "AllowOverride AuthConfig"
+    - name: edit index.html file
+      copy:
+        dest: /var/www/html/index.html
+        content: "Har Har Mahadev"
+    - name: creation of .htaccess file
+      copy:
+        src: .htaccess
+        dest: /var/www/html/.htaccess
+    - name: installation of passlib library using pip3
+      pip:
+        name: "passlib"
+    - name: Add a user to a password file and ensure permissions are set
+      community.general.htpasswd:
+        path: /etc/www.passwd
+        name: parvathi
+        password: 'redhat'
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
